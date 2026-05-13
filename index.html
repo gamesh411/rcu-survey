@@ -242,7 +242,7 @@ const SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbyVvHkByEo7PGU5vp-kv
 // === EXAMPLE DATA ===
 // These are loaded from the generated HTML files. In production, inline them or fetch.
 // Each example: { id, title, plain_html, annotated_html, comprehension: {question, options[], correct} }
-const EXAMPLES = window.SURVEY_EXAMPLES || [];
+let EXAMPLES = [];
 
 // === STATE ===
 let state = {
@@ -311,6 +311,8 @@ setInterval(updateTimer, 1000);
 
 // === FLOW ===
 function startSurvey() {
+  EXAMPLES = window.SURVEY_EXAMPLES || [];
+  if (!EXAMPLES.length) { alert('Error: examples not loaded.'); return; }
   state.startTime = Date.now();
   // Randomize example order
   state.examples = shuffle(EXAMPLES);
